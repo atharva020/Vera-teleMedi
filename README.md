@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏥 TeleMed Connect
 
-## Getting Started
+A modern telemedicine consultation platform built with Next.js, Supabase, and shadcn/ui. This application enables secure communication between patients and doctors through a role-based system with internal authentication.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 🔐 **Secure Authentication**: Internal auth using Bcrypt password hashing
+- 👥 **Role-Based Access**: Separate dashboards for patients and doctors
+- 🎨 **Beautiful UI**: Built with shadcn/ui components and Tailwind CSS
+- 🚀 **Modern Stack**: Next.js 14+ with App Router and Server Components
+- 💾 **Supabase Backend**: PostgreSQL database with real-time capabilities
+- 🔒 **Session Management**: HTTP-only cookies for secure session storage
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ installed
+- A Supabase account ([Sign up free](https://supabase.com))
+
+### Installation
+
+1. **Clone and install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Set up Supabase**
+   - Create a new project on [Supabase](https://supabase.com)
+   - Go to the SQL Editor
+   - Copy contents from `supabase-schema.sql` and execute it
+   - This creates tables and demo users
+
+3. **Configure environment variables**
+   
+   Create `.env.local` in the root directory:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+   ```
+   
+   Find these values in: Supabase Dashboard → Project Settings → API
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   
+   Open [http://localhost:3000](http://localhost:3000)
+
+### 🧪 Demo Accounts
+
+- **Patient**: `patient1` / `password123`
+- **Doctor**: `doctor1` / `password123`
+
+## 📁 Project Structure
+
+```
+├── app/
+│   ├── api/auth/           # Authentication endpoints
+│   ├── dashboard/          # Role-based dashboard
+│   ├── login/              # Login page
+│   └── page.tsx            # Home (redirects)
+├── components/
+│   ├── ui/                 # shadcn/ui components
+│   ├── PatientDashboard.tsx
+│   └── DoctorDashboard.tsx
+├── lib/
+│   ├── auth.ts             # Session management
+│   ├── supabase.ts         # Supabase client
+│   ├── types.ts            # TypeScript types
+│   └── utils.ts            # Utilities
+└── scripts/
+    └── hash-password.js    # Password hashing tool
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔧 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js 14+](https://nextjs.org/)
+- **Database**: [Supabase](https://supabase.com/) (PostgreSQL)
+- **Authentication**: Internal (Bcrypt + HTTP-only cookies)
+- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Language**: TypeScript
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Utilities
 
-## Learn More
+### Hash Password
 
-To learn more about Next.js, take a look at the following resources:
+Generate bcrypt hashes for new users:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+node scripts/hash-password.js yourpassword
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📚 Documentation
 
-## Deploy on Vercel
+For detailed setup instructions, see [SETUP.md](./SETUP.md)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔐 Security Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- RLS is disabled for initial development (enable in production!)
+- Always use HTTPS in production
+- Rotate secrets regularly
+- Implement rate limiting on auth endpoints
+
+## 📝 License
+
+MIT
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests.
