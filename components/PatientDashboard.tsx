@@ -9,6 +9,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ConsultationDetail from '@/components/ConsultationDetail';
+import { SidebarToggleButton } from '@/components/Sidebar';
 
 interface PatientDashboardProps {
   user: User;
@@ -41,24 +42,25 @@ export default function PatientDashboard({ user }: PatientDashboardProps) {
   const totalConsultations = consultations.length;
 
   return (
-    <div className="p-6">
+    <div className="p-4 md:p-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-6 gap-3">
+        <div className="flex items-center gap-3">
+          <SidebarToggleButton />
+          <h1 className="text-xl md:text-2xl font-bold text-slate-900">Dashboard</h1>
         </div>
         <div className="flex items-center space-x-3">
-          <div className="flex items-center space-x-2 text-sm text-slate-600 border border-slate-200 rounded-lg px-3 py-1.5">
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="flex items-center space-x-2 text-xs md:text-sm text-slate-600 border border-slate-200 rounded-lg px-2 md:px-3 py-1.5">
+            <svg className="h-4 w-4 hidden sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <span>16 Nov 2025 - 13 Dec 2025</span>
+            <span className="whitespace-nowrap">16 Nov - 13 Dec</span>
           </div>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid gap-6 md:grid-cols-3 mb-6">
+      <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-3 mb-4 md:mb-6">
         {/* Active Consultations */}
         <Card>
           <CardHeader className="pb-3">

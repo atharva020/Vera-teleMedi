@@ -24,10 +24,10 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
 
   return (
     <header className="sticky top-0 z-30 h-16 border-b border-slate-200 bg-white">
-      <div className="flex h-full items-center justify-between px-6">
+      <div className="flex h-full items-center justify-between px-4 md:px-6">
         {/* Search Bar */}
-        <div className="flex-1 max-w-md">
-          <div className="relative">
+        <div className="hidden md:flex flex-1 max-w-md">
+          <div className="relative w-full">
             <svg
               className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
               fill="none"
@@ -46,14 +46,22 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
               placeholder="Search..."
               className="pl-10 w-full"
             />
-            <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 hidden h-5 select-none items-center gap-1 rounded border border-slate-200 bg-white px-1.5 font-mono text-[10px] font-medium text-slate-500 opacity-100 sm:flex">
+            <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 hidden h-5 select-none items-center gap-1 rounded border border-slate-200 bg-white px-1.5 font-mono text-[10px] font-medium text-slate-500 opacity-100 lg:flex">
               <span className="text-xs">⌘</span>K
             </kbd>
           </div>
         </div>
 
+        {/* Mobile: Logo */}
+        <div className="flex md:hidden items-center space-x-2">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
+            <span className="text-white font-bold text-sm">V</span>
+          </div>
+          <span className="font-semibold text-slate-900">Vera</span>
+        </div>
+
         {/* Right Side Actions */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 md:space-x-4">
           {/* Notifications */}
           <button className="relative rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -67,8 +75,8 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
             <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
           </button>
 
-          {/* Theme Toggle */}
-          <button className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+          {/* Theme Toggle - Hidden on mobile */}
+          <button className="hidden sm:block rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 strokeLinecap="round"
@@ -79,8 +87,8 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
             </svg>
           </button>
 
-          {/* Settings */}
-          <button className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+          {/* Settings - Hidden on mobile */}
+          <button className="hidden sm:block rounded-lg p-2 text-slate-600 hover:bg-slate-100 hover:text-slate-900">
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 strokeLinecap="round"

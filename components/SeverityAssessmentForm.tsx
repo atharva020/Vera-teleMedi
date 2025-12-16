@@ -45,12 +45,18 @@ export default function SeverityAssessmentForm({ onSubmit, onCancel, initialResp
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+      <div className="mb-4 md:mb-6">
+        <h2 className="text-xl md:text-2xl font-bold text-slate-900 mb-2">Health Severity Assessment</h2>
+        <p className="text-sm md:text-base text-slate-600">
+          Please answer all questions honestly. This will help us prioritize your consultation.
+        </p>
+      </div>
+      <div className="space-y-4 md:space-y-6">
         {SEVERITY_QUESTIONS.map((question, index) => (
           <Card key={question.id} className="border-2">
-            <CardContent className="pt-6">
-              <Label className="text-base font-semibold text-slate-900 mb-4 block">
+            <CardContent className="pt-4 md:pt-6 px-4 md:px-6">
+              <Label className="text-sm md:text-base font-semibold text-slate-900 mb-4 block">
                 {index + 1}. {question.question}
                 <span className="text-red-500 ml-1">*</span>
               </Label>

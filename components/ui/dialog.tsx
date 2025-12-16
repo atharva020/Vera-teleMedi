@@ -68,7 +68,7 @@ export function DialogContent({ children, className }: { children: React.ReactNo
       {/* Dialog */}
       <div
         className={cn(
-          'relative z-50 w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl animate-in fade-in-0 zoom-in-95 flex flex-col max-h-[90vh]',
+          'relative z-50 w-full max-w-lg mx-4 md:mx-auto bg-white rounded-lg shadow-xl animate-in fade-in-0 zoom-in-95 flex flex-col max-h-[90vh]',
           className
         )}
         onClick={(e) => e.stopPropagation()}

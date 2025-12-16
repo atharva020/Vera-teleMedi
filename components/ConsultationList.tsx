@@ -132,11 +132,11 @@ export default function ConsultationList({ user }: ConsultationListProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="container mx-auto px-4 py-4 md:py-8">
+      <div className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-2">Health Assessments</h1>
-          <p className="text-slate-600">
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Health Assessments</h1>
+          <p className="text-sm md:text-base text-slate-600">
             {assessments.length > 0 
               ? `You have ${assessments.length} assessment${assessments.length > 1 ? 's' : ''}. Create a new one anytime.`
               : 'Create your first health assessment below'}
@@ -144,12 +144,13 @@ export default function ConsultationList({ user }: ConsultationListProps) {
         </div>
         <Button 
           onClick={handleCreateNew}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg"
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg flex-shrink-0 w-full sm:w-auto"
         >
           <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          Create New Assessment
+          <span className="hidden sm:inline">Create New Assessment</span>
+          <span className="sm:hidden">New Assessment</span>
         </Button>
       </div>
 
@@ -200,34 +201,34 @@ export default function ConsultationList({ user }: ConsultationListProps) {
                 key={consultation.id} 
                 className={`border-2 transition-all ${statusColors[consultation.status as keyof typeof statusColors] || 'border-slate-200'}`}
               >
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4 flex-1">
-                      <div className={`h-3 w-3 rounded-full ${severityInfo.color} flex-shrink-0`}></div>
+                <CardHeader className="pb-3 p-4 md:p-6">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div className="flex items-start space-x-3 flex-1 min-w-0">
+                      <div className={`h-3 w-3 mt-1 rounded-full ${severityInfo.color} flex-shrink-0`}></div>
                       <div className="flex-1 min-w-0">
-                        <CardTitle className="text-lg font-semibold text-slate-900 mb-1">
+                        <CardTitle className="text-base md:text-lg font-semibold text-slate-900 mb-2">
                           {consultation.title}
                         </CardTitle>
-                        <div className="flex items-center space-x-4 text-sm text-slate-600">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs md:text-sm text-slate-600">
                           <span>Submitted: {new Date(consultation.created_at).toLocaleDateString()}</span>
                           <span className="capitalize">Status: {consultation.status}</span>
-                          <span className={`px-2 py-1 rounded-md text-xs font-medium ${severityInfo.bgColor} ${severityInfo.textColor}`}>
+                          <span className={`px-2 py-1 rounded-md text-xs font-medium ${severityInfo.bgColor} ${severityInfo.textColor} inline-block w-fit`}>
                             {severityInfo.label}
                           </span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-2 flex-shrink-0">
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => handleEditAssessment(consultation)}
-                        className="bg-white"
+                        className="bg-white gap-1.5"
                       >
-                        <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
-                        Edit
+                        <span className="hidden sm:inline">Edit</span>
                       </Button>
                       <Button
                         variant="outline"

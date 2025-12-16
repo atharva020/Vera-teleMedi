@@ -280,22 +280,22 @@ export default function ConsultationDetail({ consultation, onUpdate, userType }:
 
       {/* Messages/Replies */}
       <Card>
-        <CardHeader>
-          <CardTitle>Conversation</CardTitle>
-          <CardDescription>
+        <CardHeader className="px-4 md:px-6 pt-4 md:pt-6 pb-3 md:pb-4">
+          <CardTitle className="text-lg md:text-xl">Conversation</CardTitle>
+          <CardDescription className="text-sm">
             Chat with the {userType === 'doctor' ? 'patient' : 'doctor'} about this consultation
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 px-4 md:px-6 pb-4 md:pb-6">
           {/* Messages Display */}
-          <div className="border rounded-lg p-4 bg-slate-50 min-h-[300px] max-h-[400px] overflow-y-auto">
+          <div className="border rounded-lg p-3 md:p-4 bg-slate-50 min-h-[250px] md:min-h-[300px] max-h-[300px] md:max-h-[400px] overflow-y-auto">
             {replies.length === 0 ? (
-              <div className="flex items-center justify-center h-full">
+              <div className="flex items-center justify-center h-full min-h-[200px]">
                 <div className="text-center">
-                  <svg className="h-12 w-12 mx-auto text-slate-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-10 w-10 md:h-12 md:w-12 mx-auto text-slate-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
-                  <p className="text-sm text-slate-500">No messages yet</p>
+                  <p className="text-xs md:text-sm text-slate-500">No messages yet</p>
                   <p className="text-xs text-slate-400 mt-1">Start a conversation below</p>
                 </div>
               </div>
@@ -306,12 +306,12 @@ export default function ConsultationDetail({ consultation, onUpdate, userType }:
                     key={reply.id}
                     className={`flex ${reply.user_id === consultation.patient_id ? 'justify-start' : 'justify-end'}`}
                   >
-                    <div className={`max-w-[75%] ${
+                    <div className={`max-w-[85%] md:max-w-[75%] ${
                       reply.user_id === consultation.patient_id
                         ? 'bg-white border border-blue-200'
                         : 'bg-blue-600 text-white'
-                    } rounded-lg p-3 shadow-sm`}>
-                      <div className="flex items-center gap-2 mb-1">
+                    } rounded-lg p-2 md:p-3 shadow-sm`}>
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
                         <span className={`text-xs font-semibold ${
                           reply.user_id === consultation.patient_id
                             ? 'text-blue-700'
@@ -327,11 +327,11 @@ export default function ConsultationDetail({ consultation, onUpdate, userType }:
                           {new Date(reply.created_at).toLocaleString()}
                         </span>
                       </div>
-                      <p className={`text-sm ${
+                      <p className={`text-xs md:text-sm ${
                         reply.user_id === consultation.patient_id
                           ? 'text-slate-900'
                           : 'text-white'
-                      }`}>{reply.message}</p>
+                      } break-words`}>{reply.message}</p>
                     </div>
                   </div>
                 ))}
@@ -340,17 +340,17 @@ export default function ConsultationDetail({ consultation, onUpdate, userType }:
           </div>
 
           {/* Message Input */}
-          <div className="border-t pt-4">
-            <Label htmlFor="message" className="text-sm font-medium mb-2 block">
+          <div className="border-t pt-3 md:pt-4">
+            <Label htmlFor="message" className="text-xs md:text-sm font-medium mb-2 block">
               Send a message
             </Label>
-            <div className="flex space-x-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <textarea
                 id="message"
                 value={replyMessage}
                 onChange={(e) => setReplyMessage(e.target.value)}
-                placeholder={`Type your message to the ${userType === 'doctor' ? 'patient' : 'doctor'}...`}
-                className="flex min-h-[80px] w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                placeholder="Type message..."
+                className="flex min-h-[70px] md:min-h-[80px] w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 resize-none"
                 onKeyPress={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
@@ -361,16 +361,16 @@ export default function ConsultationDetail({ consultation, onUpdate, userType }:
               <Button 
                 onClick={handleReply} 
                 disabled={loading || !replyMessage.trim()} 
-                className="bg-blue-600 hover:bg-blue-700 self-end"
+                className="bg-blue-600 hover:bg-blue-700 self-end sm:self-auto sm:flex-shrink-0"
                 size="lg"
               >
-                <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-4 w-4 sm:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
-                Send
+                <span className="hidden sm:inline">Send</span>
               </Button>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 mt-1 hidden sm:block">
               Press Enter to send, Shift+Enter for new line
             </p>
           </div>
