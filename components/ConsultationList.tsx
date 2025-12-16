@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -16,7 +15,6 @@ interface ConsultationListProps {
 }
 
 export default function ConsultationList({ user }: ConsultationListProps) {
-  const router = useRouter();
   const [consultations, setConsultations] = useState<ConsultationRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [formOpen, setFormOpen] = useState(false);

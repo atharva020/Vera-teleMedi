@@ -48,11 +48,7 @@ telemedicine-consult-app/
 │   └── hash-password.js                # Generate bcrypt hashes
 │
 ├── 📸 public/                           # Static Assets
-│   ├── file.svg
-│   ├── globe.svg
-│   ├── next.svg
-│   ├── vercel.svg
-│   └── window.svg
+│   └── (empty - no static assets currently)
 │
 ├── 📚 Documentation/
 │   ├── ARCHITECTURE.md                 # System architecture details

@@ -1,14 +1,28 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { User } from '@/lib/types';
+import { UserMenu } from '@/components/UserMenu';
 
 interface HeaderProps {
   user?: User | null;
 }
 
 export default function Header({ user }: HeaderProps) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      router.push('/login');
+      router.refresh();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -17,7 +31,7 @@ export default function Header({ user }: HeaderProps) {
             <span className="text-white font-bold text-xl">V</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">vera</span>
+            <span className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Vera</span>
             <span className="text-xs text-slate-500 -mt-1">Healthcare Platform</span>
           </div>
         </Link>
@@ -31,14 +45,7 @@ export default function Header({ user }: HeaderProps) {
               >
                 Dashboard
               </Link>
-              <div className="flex items-center space-x-3">
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">{user.username.charAt(0).toUpperCase()}</span>
-                </div>
-                <span className="text-sm text-slate-600">
-                  Welcome, {user.username}
-                </span>
-              </div>
+              <UserMenu user={user} onLogout={handleLogout} />
             </>
           ) : (
             <>

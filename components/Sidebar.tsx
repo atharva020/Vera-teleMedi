@@ -44,7 +44,7 @@ export default function Sidebar({ user }: SidebarProps) {
             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
               <span className="text-white font-bold text-sm">V</span>
             </div>
-            <span className="font-semibold text-slate-900">vera</span>
+            <span className="font-semibold text-slate-900">Vera</span>
           </div>
         </div>
 

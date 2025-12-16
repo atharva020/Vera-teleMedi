@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "vera - Healthcare Consultation Platform",
+  title: "Vera - Healthcare Consultation Platform",
   description: "Connect with experienced healthcare professionals from the comfort of your home. Get expert medical consultations through our secure telemedicine platform.",
 };
 

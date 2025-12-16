@@ -20,8 +20,8 @@ export default async function PatientHomePage() {
         <HeroSection
           logo={{
             url: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=100&h=100&fit=crop&q=80",
-            alt: "vera Logo",
-            text: "vera"
+            alt: "Vera Logo",
+            text: "Vera"
           }}
           slogan="HEALTHCARE AT YOUR FINGERTIPS"
           title={
@@ -37,7 +37,7 @@ export default async function PatientHomePage() {
           }}
           backgroundImage="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&auto=format&fit=crop&q=80"
           contactInfo={{
-            website: "vera.com",
+            website: "Vera.com",
             phone: "+1 (555) 123-4567",
             address: "Available 24/7 Online",
           }}
@@ -48,7 +48,7 @@ export default async function PatientHomePage() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-slate-900 mb-4">
-                Why Choose vera?
+                Why Choose Vera?
               </h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
                 Experience healthcare like never before with our comprehensive telemedicine platform
