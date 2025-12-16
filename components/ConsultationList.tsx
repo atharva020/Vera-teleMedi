@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { User, ConsultationRequest } from '@/lib/types';
 import ConsultationDetail from '@/components/ConsultationDetail';
 import SeverityAssessmentForm from '@/components/SeverityAssessmentForm';
+import { getSeverityDisplay } from '@/lib/severityQuestions';
 import type { SeverityLevel } from '@/lib/severityQuestions';
 import { showToast } from '@/lib/toast';
 
@@ -20,6 +21,7 @@ export default function ConsultationList({ user }: ConsultationListProps) {
   const [formOpen, setFormOpen] = useState(false);
   const [editingConsultation, setEditingConsultation] = useState<ConsultationRequest | null>(null);
   const [selectedConsultation, setSelectedConsultation] = useState<ConsultationRequest | null>(null);
+  const [expandedConsultations, setExpandedConsultations] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     fetchConsultations();
@@ -36,11 +38,6 @@ export default function ConsultationList({ user }: ConsultationListProps) {
       setLoading(false);
     }
   };
-
-  // Find existing assessment (most recent one with severity_level)
-  const existingAssessment = consultations.find(
-    c => c.severity_level && c.form_responses
-  );
 
   const handleFormSubmit = async (responses: Record<string, any>, severity: SeverityLevel) => {
     try {
@@ -93,63 +90,35 @@ export default function ConsultationList({ user }: ConsultationListProps) {
     }
   };
 
-  const handleEditAssessment = () => {
-    if (existingAssessment) {
-      setEditingConsultation(existingAssessment);
-      setFormOpen(true);
-    }
+  const handleCreateNew = () => {
+    setEditingConsultation(null);
+    setFormOpen(true);
   };
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 mb-2">Health Assessment</h1>
-        <p className="text-slate-600">
-          {existingAssessment 
-            ? 'View or edit your submitted assessment below'
-            : 'Please complete the assessment below so our medical team can prioritize your care'}
-        </p>
-      </div>
+  const handleEditAssessment = (consultation: ConsultationRequest) => {
+    setEditingConsultation(consultation);
+    setFormOpen(true);
+  };
 
-      {/* Show loading, existing assessment, or form */}
-      {loading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="flex flex-col items-center space-y-4">
-            <div className="h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-slate-600">Loading your assessment...</p>
-          </div>
-        </div>
-      ) : existingAssessment && !formOpen ? (
-        <div className="space-y-4">
-          <Card className="border-2 border-green-200 bg-green-50/30">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-1">Assessment Submitted</h3>
-                  <p className="text-sm text-slate-600">
-                    Submitted on {new Date(existingAssessment.created_at).toLocaleDateString()}
-                  </p>
-                </div>
-                <Button 
-                  onClick={handleEditAssessment}
-                  variant="outline"
-                  className="bg-white"
-                >
-                  <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                  Edit Assessment
-                </Button>
-              </div>
-              <ConsultationDetail
-                consultation={existingAssessment}
-                onUpdate={fetchConsultations}
-                userType="patient"
-              />
-            </CardContent>
-          </Card>
-        </div>
-      ) : (
+  const toggleExpanded = (consultationId: string) => {
+    const newExpanded = new Set(expandedConsultations);
+    if (newExpanded.has(consultationId)) {
+      newExpanded.delete(consultationId);
+    } else {
+      newExpanded.add(consultationId);
+    }
+    setExpandedConsultations(newExpanded);
+  };
+
+  // Filter assessments (those with severity_level and form_responses)
+  const assessments = consultations.filter(
+    c => c.severity_level && c.form_responses
+  );
+
+  // Show form if formOpen is true
+  if (formOpen) {
+    return (
+      <div className="container mx-auto px-4 py-8">
         <SeverityAssessmentForm 
           onSubmit={handleFormSubmit}
           initialResponses={editingConsultation?.form_responses as Record<string, number> | undefined}
@@ -158,8 +127,147 @@ export default function ConsultationList({ user }: ConsultationListProps) {
             setEditingConsultation(null);
           }}
         />
-      )}
+      </div>
+    );
+  }
 
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Health Assessments</h1>
+          <p className="text-slate-600">
+            {assessments.length > 0 
+              ? `You have ${assessments.length} assessment${assessments.length > 1 ? 's' : ''}. Create a new one anytime.`
+              : 'Create your first health assessment below'}
+          </p>
+        </div>
+        <Button 
+          onClick={handleCreateNew}
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg"
+        >
+          <svg className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          Create New Assessment
+        </Button>
+      </div>
+
+      {/* Loading State */}
+      {loading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-slate-600">Loading your assessments...</p>
+          </div>
+        </div>
+      ) : assessments.length === 0 ? (
+        <Card className="border-2 border-dashed border-slate-300 bg-slate-50/50">
+          <CardContent className="pt-12 pb-12 text-center">
+            <div className="max-w-md mx-auto">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">No Assessments Yet</h3>
+              <p className="text-slate-600 mb-6">
+                Create your first health assessment to get started with medical consultations.
+              </p>
+              <Button 
+                onClick={handleCreateNew}
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
+              >
+                Create Your First Assessment
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <div className="space-y-4">
+          {assessments.map((consultation) => {
+            const isExpanded = expandedConsultations.has(consultation.id);
+            const severityInfo = getSeverityDisplay(consultation.severity_level as SeverityLevel);
+            const statusColors = {
+              pending: 'border-yellow-200 bg-yellow-50/30',
+              accepted: 'border-blue-200 bg-blue-50/30',
+              completed: 'border-green-200 bg-green-50/30',
+              cancelled: 'border-red-200 bg-red-50/30',
+            };
+
+            return (
+              <Card 
+                key={consultation.id} 
+                className={`border-2 transition-all ${statusColors[consultation.status as keyof typeof statusColors] || 'border-slate-200'}`}
+              >
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4 flex-1">
+                      <div className={`h-3 w-3 rounded-full ${severityInfo.color} flex-shrink-0`}></div>
+                      <div className="flex-1 min-w-0">
+                        <CardTitle className="text-lg font-semibold text-slate-900 mb-1">
+                          {consultation.title}
+                        </CardTitle>
+                        <div className="flex items-center space-x-4 text-sm text-slate-600">
+                          <span>Submitted: {new Date(consultation.created_at).toLocaleDateString()}</span>
+                          <span className="capitalize">Status: {consultation.status}</span>
+                          <span className={`px-2 py-1 rounded-md text-xs font-medium ${severityInfo.bgColor} ${severityInfo.textColor}`}>
+                            {severityInfo.label}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleEditAssessment(consultation)}
+                        className="bg-white"
+                      >
+                        <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Edit
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => toggleExpanded(consultation.id)}
+                        className="bg-white gap-1.5"
+                      >
+                        {isExpanded ? (
+                          <>
+                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                            </svg>
+                            <span>Hide</span>
+                          </>
+                        ) : (
+                          <>
+                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                            <span>Show</span>
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </CardHeader>
+                {isExpanded && (
+                  <CardContent className="pt-0">
+                    <ConsultationDetail
+                      consultation={consultation}
+                      onUpdate={fetchConsultations}
+                      userType="patient"
+                    />
+                  </CardContent>
+                )}
+              </Card>
+            );
+          })}
+        </div>
+      )}
 
       {/* Patient Consultation Detail Dialog */}
       {selectedConsultation && (

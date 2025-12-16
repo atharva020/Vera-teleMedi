@@ -257,7 +257,7 @@ export default function ConsultationDetail({ consultation, onUpdate, userType }:
               Write the prescription for this consultation
             </DialogDescription>
           </DialogHeader>
-          <div className="py-4">
+          <div className="px-6 py-4">
             <Label htmlFor="prescription">Prescription</Label>
             <textarea
               id="prescription"

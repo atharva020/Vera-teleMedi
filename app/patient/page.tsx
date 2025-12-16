@@ -32,15 +32,10 @@ export default async function PatientHomePage() {
           }
           subtitle="Connect with experienced healthcare professionals from the comfort of your home. Get expert medical consultations through our secure telemedicine platform."
           callToAction={{
-            text: "START CONSULTATION",
+            text: "Start Self Assessment",
             href: user ? "/consultations" : "/login",
           }}
           backgroundImage="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&auto=format&fit=crop&q=80"
-          contactInfo={{
-            website: "Vera.com",
-            phone: "+1 (555) 123-4567",
-            address: "Available 24/7 Online",
-          }}
         />
 
         {/* Features Section */}

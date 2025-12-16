@@ -44,7 +44,7 @@ interface HeroSectionProps {
     href: string;
   };
   backgroundImage: string;
-  contactInfo: {
+  contactInfo?: {
     website: string;
     phone: string;
     address: string;
@@ -125,22 +125,24 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
             </div>
 
             {/* Bottom Section: Footer Info */}
-            <motion.footer className="mt-12 w-full" variants={itemVariants}>
-                <div className="grid grid-cols-1 gap-6 text-sm text-slate-500 sm:grid-cols-3">
-                    <div className="flex items-center">
-                        <InfoIcon type="website" />
-                        <span>{contactInfo.website}</span>
+            {contactInfo && (
+                <motion.footer className="mt-12 w-full" variants={itemVariants}>
+                    <div className="grid grid-cols-1 gap-6 text-sm text-slate-500 sm:grid-cols-3">
+                        <div className="flex items-center">
+                            <InfoIcon type="website" />
+                            <span>{contactInfo.website}</span>
+                        </div>
+                        <div className="flex items-center">
+                            <InfoIcon type="phone" />
+                            <span>{contactInfo.phone}</span>
+                        </div>
+                        <div className="flex items-center">
+                            <InfoIcon type="address" />
+                            <span>{contactInfo.address}</span>
+                        </div>
                     </div>
-                    <div className="flex items-center">
-                        <InfoIcon type="phone" />
-                        <span>{contactInfo.phone}</span>
-                    </div>
-                    <div className="flex items-center">
-                        <InfoIcon type="address" />
-                        <span>{contactInfo.address}</span>
-                    </div>
-                </div>
-            </motion.footer>
+                </motion.footer>
+            )}
         </div>
 
         {/* Right Side: Image with Clip Path Animation */}

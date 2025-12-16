@@ -49,7 +49,7 @@ export default function Sidebar({ user }: SidebarProps) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 space-y-1 px-3 py-4">
+        <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
           {(user.user_type === 'patient' ? patientNavigationItems : navigationItems).map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -69,25 +69,6 @@ export default function Sidebar({ user }: SidebarProps) {
             );
           })}
         </nav>
-
-        {/* User Info Section */}
-        <div className="border-t border-slate-200 p-4">
-          <div className="flex items-center space-x-3">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
-              <span className="text-white text-xs font-medium">
-                {user.username.charAt(0).toUpperCase()}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-900 truncate">
-                {user.username}
-              </p>
-              <p className="text-xs text-slate-500 truncate">
-                {user.user_type === 'patient' ? 'Patient' : 'Doctor'}
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </aside>
   );
