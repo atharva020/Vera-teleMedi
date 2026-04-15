@@ -70,7 +70,7 @@ export default function ConsultationList({ user }: ConsultationListProps) {
           },
           body: JSON.stringify({
             title: 'Severity Assessment',
-            description: 'Patient severity assessment consultation',
+            description: 'Patient severity assessment by VERA',
             form_responses: responses,
             severity_level: severity,
           }),
@@ -212,9 +212,6 @@ export default function ConsultationList({ user }: ConsultationListProps) {
                         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs md:text-sm text-slate-600">
                           <span>Submitted: {new Date(consultation.created_at).toLocaleDateString()}</span>
                           <span className="capitalize">Status: {consultation.status}</span>
-                          <span className={`px-2 py-1 rounded-md text-xs font-medium ${severityInfo.bgColor} ${severityInfo.textColor} inline-block w-fit`}>
-                            {severityInfo.label}
-                          </span>
                         </div>
                       </div>
                     </div>

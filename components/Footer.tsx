@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="text-xl font-bold text-slate-900">Vera</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
-              Your trusted partner in remote healthcare consultation.
+              Bridging the gap between patient-reported symptoms and clinical action.
             </p>
           </div>
 
@@ -49,9 +49,6 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold text-slate-900">Contact</h4>
             <ul className="space-y-3 text-sm text-slate-600">
-              <li className="hover:text-blue-600 transition-colors duration-200">support@Vera.com</li>
-              <li className="hover:text-blue-600 transition-colors duration-200">+1 (555) 123-4567</li>
-              <li>Available 24/7</li>
             </ul>
           </div>
         </div>
