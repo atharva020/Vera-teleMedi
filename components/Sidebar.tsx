@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { User } from '@/lib/types';
 import { cn } from '@/lib/utils';
@@ -90,9 +91,14 @@ export default function Sidebar({ user }: SidebarProps) {
           {/* Logo Section */}
           <div className="flex h-16 items-center border-b border-slate-200 px-6">
             <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">V</span>
-              </div>
+              <Image 
+                src="/vera_logo.png" 
+                alt="Vera Logo" 
+                width={32} 
+                height={32} 
+                className="h-8 w-auto object-contain rounded-lg"
+                priority
+              />
               <span className="font-semibold text-slate-900">Vera</span>
             </div>
           </div>

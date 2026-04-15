@@ -8,19 +8,19 @@ import { motion } from 'framer-motion';
 const InfoIcon = ({ type }: { type: 'website' | 'phone' | 'address' }) => {
     const icons = {
         website: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-blue-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-[#0A3747]">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="2" x2="22" y1="12" y2="12"></line>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
             </svg>
         ),
         phone: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-blue-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-[#0A3747]">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
         ),
         address: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-blue-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-[#0A3747]">
                 <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
                 <circle cx="12" cy="10" r="3"></circle>
             </svg>
@@ -111,11 +111,11 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
                     <motion.h1 className="text-4xl font-bold leading-tight text-slate-900 md:text-5xl" variants={itemVariants}>
                         {title}
                     </motion.h1>
-                    <motion.div className="my-6 h-1 w-20 bg-gradient-to-r from-blue-500 to-indigo-500" variants={itemVariants}></motion.div>
+                    <motion.div className="my-6 h-1 w-20 bg-gradient-to-r from-[#FF7E66] to-[#ff5f42]" variants={itemVariants}></motion.div>
                     <motion.p className="mb-8 max-w-md text-base text-slate-600 leading-relaxed" variants={itemVariants}>
                         {subtitle}
                     </motion.p>
-                    <motion.a href={callToAction.href} className="inline-flex items-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:shadow-xl hover:scale-105" variants={itemVariants}>
+                    <motion.a href={callToAction.href} className="inline-flex items-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-[#FF7E66] to-[#ff5f42] rounded-lg shadow-lg hover:from-[#ff5f42] hover:to-[#FF7E66] transition-all duration-300 hover:shadow-xl hover:scale-105" variants={itemVariants}>
                         {callToAction.text}
                         <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />

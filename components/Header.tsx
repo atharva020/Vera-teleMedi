@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 import { User } from '@/lib/types';
 import { UserMenu } from '@/components/UserMenu';
 
@@ -27,12 +28,17 @@ export default function Header({ user }: HeaderProps) {
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center space-x-2 md:space-x-3 group">
-          <div className="h-8 w-8 md:h-10 md:w-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-            <span className="text-white font-bold text-lg md:text-xl">V</span>
-          </div>
+          <Image 
+            src="/vera_logo.png" 
+            alt="Vera Logo" 
+            width={40} 
+            height={40} 
+            className="h-8 w-auto md:h-10 object-contain shadow-sm group-hover:shadow-md transition-shadow rounded-xl"
+            priority
+          />
           <div className="flex flex-col">
             <span className="text-lg md:text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Vera</span>
-            <span className="hidden sm:block text-xs text-slate-500 -mt-1">Healthcare Platform</span>
+            <span className="hidden sm:block text-xs text-slate-500 -mt-1">AI-powered Oncology triage and remote symptom monitoring platform</span>
           </div>
         </Link>
 
@@ -52,7 +58,7 @@ export default function Header({ user }: HeaderProps) {
               <Link href="/login" className="text-xs md:text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors px-2 md:px-3 py-2 rounded-lg hover:bg-blue-50">
                 Login
               </Link>
-              <Button asChild size="sm" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all text-xs md:text-sm">
+              <Button asChild size="sm" className="bg-gradient-to-r from-[#FF7E66] to-[#ff5f42] hover:opacity-90 text-white shadow-lg hover:shadow-xl transition-all text-xs md:text-sm border-none">
                 <Link href="/login">Get Started</Link>
               </Button>
             </>

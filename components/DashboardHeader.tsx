@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
 import { User } from '@/lib/types';
 import { UserMenu } from '@/components/UserMenu';
 
@@ -54,9 +55,14 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
 
         {/* Mobile: Logo */}
         <div className="flex md:hidden items-center space-x-2">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">V</span>
-          </div>
+          <Image 
+            src="/vera_logo.png" 
+            alt="Vera Logo" 
+            width={32} 
+            height={32} 
+            className="h-8 w-auto object-contain rounded-lg"
+            priority
+          />
           <span className="font-semibold text-slate-900">Vera</span>
         </div>
 

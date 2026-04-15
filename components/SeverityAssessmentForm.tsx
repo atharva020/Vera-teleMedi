@@ -11,9 +11,10 @@ interface SeverityAssessmentFormProps {
   onSubmit: (responses: Record<string, number>, severity: SeverityLevel) => void;
   onCancel?: () => void;
   initialResponses?: Record<string, number>;
+  userType?: 'patient' | 'doctor';
 }
 
-export default function SeverityAssessmentForm({ onSubmit, onCancel, initialResponses }: SeverityAssessmentFormProps) {
+export default function SeverityAssessmentForm({ onSubmit, onCancel, initialResponses, userType = 'patient' }: SeverityAssessmentFormProps) {
   const [responses, setResponses] = useState<Record<string, number>>(initialResponses || {});
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function SeverityAssessmentForm({ onSubmit, onCancel, initialResp
     e.preventDefault();
 
     // Check if all questions are answered
-    const unansweredQuestions = SEVERITY_QUESTIONS.filter(q => !responses[q.id]);
+    const unansweredQuestions = SEVERITY_QUESTIONS.filter(q => responses[q.id] === undefined);
     
     if (unansweredQuestions.length > 0) {
       showToast('Required', `Please answer all questions. Missing: ${unansweredQuestions.length} question(s)`, 'warning');
@@ -82,13 +83,16 @@ export default function SeverityAssessmentForm({ onSubmit, onCancel, initialResp
                     <span className="ml-3 text-sm text-slate-700 flex-1">
                       {option.label}
                     </span>
-                    <span className={`ml-2 px-2 py-0.5 rounded text-xs font-medium ${
-                      option.weight === 1 ? 'bg-green-100 text-green-700' :
-                      option.weight === 2 ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-red-100 text-red-700'
-                    }`}>
-                      {option.weight === 1 ? 'Low' : option.weight === 2 ? 'Moderate' : 'Severe'}
-                    </span>
+                    {userType === 'doctor' && (
+                      <span className={`ml-2 px-2 py-0.5 rounded text-xs font-medium ${
+                        option.weight === 0 || option.weight === 1 ? 'bg-green-100 text-green-700' :
+                        option.weight === 2 ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-red-100 text-red-700'
+                      }`}>
+                        {option.weight === 0 || option.weight === 1 ? 'Mild' : 
+                         option.weight === 2 ? 'Moderate' : 'Severe'}
+                      </span>
+                    )}
                   </label>
                 ))}
               </div>
